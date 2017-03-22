@@ -1,4 +1,10 @@
 ﻿<!DOCTYPE html>
+<?php
+    session_start();
+    if (!$_SESSION["username"]) {
+        header("Location: index.html");
+    }
+    ?>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -14,7 +20,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Bootstrap Mutipager Template - Maxop</title>
+    <title>BotLer</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!--BOOTSTRAP MAIN STYLES -->
@@ -32,7 +38,7 @@
 <!--END HEAD SECTION -->
 <body>
     <!-- NAV SECTION -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,20 +46,43 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">BotLer</a>
+                <a class="navbar-brand"></a>
             </div>
             <div class="navbar-collapse collapse">
+            <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="http://folk.ntnu.no/marentno/BotLer/homepage.php"> <br>Homepage<br></a></li>
-                    <li><a href="http://folk.ntnu.no/marentno/viewAssignment.php"> <br>View Assignments<br></a></li>
-                    <li><a href="http://folk.ntnu.no/marentno/getFeedback.php"> <br>View Feedback<br></a></li>
-                    <li><a href="http://folk.ntnu.no/marentno/BotLer/index.html"> <br>Log Out<br></a></li>
+                <li><a href="http://folk.ntnu.no/marentno/viewAssignment.php"> <br>View Assignments<br></a></li>
+                <li><a href="http://folk.ntnu.no/marentno/BotLer/addAssignment.php"> <br>Add Assignment<br></a></li>
+                <li><a href="http://folk.ntnu.no/marentno/getFeedback.php"> <br>View Feedback<br></a></li>
+                <li><a href="http://folk.ntnu.no/marentno/"> <br>Log Out<br></a></li>
+                <li><a>
+
+                <form action="http://folk.ntnu.no/marentno/endrePassord.php" method="post">
+                    <center>
+                        <input type="text" name ="username" placeholder="Username" style="text-align:center" readonly="readonly" value=<?php echo $username; ?>>
+                        <br>
+                        <input type="password" name ="password" placeholder="Password" style="text-align:center" value=<?php echo $password; ?>>
+                        <br>
+                        <td colspan="2" style="text-align:center;"><input type="submit" value="Change Password"></td>
+                    </center>
+                </form> 
+
+                </a></li>
+
+
                 </ul>
             </div>
 
         </div>
     </div>
     <!--END NAV SECTION -->
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
     <!-- CONTACT SECTION -->
     <div class="section">
         <div class="container">
@@ -72,12 +101,10 @@
     <div class="container">
         <div class="row main-low-margin text-center">
             <div class="col-md-5 col-sm-5">
-                <div class="circle-body"><i class="fa fa-flask fa-5x  icon-set"></i></div>
-                <h3>TESTED DESIGN</h3>
+                <img src="/marthaan/BotLer/assets/img/Mashup1.png" alt="" width="30%" height="30%"/>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                    <br>
+                    By adding assignments to your course, both mandatory and preparatory, your students recieve information directly into their BotLer application.
                 </p>
             </div>
 
@@ -93,7 +120,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline">
+                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD">
                             </div>
                         </div>
                     </div>
@@ -110,42 +137,7 @@
                 </form>
             </div>
         </div>
-        <div class="row main-low-margin ">
-
-
-            <div class="col-md-7 col-sm-7">
-                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit </h3>
-                <hr>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                </p>
-            </div>
-            <div class="col-md-5 col-sm-5 text-center">
-                <div class="circle-body"><i class="fa fa-tint fa-5x  icon-set"></i></div>
-                <h3>OUR LOCATION </h3>
-                <p>
-                    <p>
-                        103, New Street,<br>
-                        New York, USA.<br>
-                        Call: +23-00-89-009<br>
-                        Email: demo@yourdomain.com<br>
-                    </p>
-
-                </p>
-            </div>
+        
         </div>
 
 
@@ -157,18 +149,22 @@
     <div id="footer">
         <div class="row">
             <div class="col-md-4">
-                <h4>Quick Information :</h4>
+                <h4>TDT4140 Software Engineering course</h4>
+                <hr>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                    Spring 2017 <br>
+                    Lecturer: Pekka Abrahamsson, Anh Nguyen Duc <br>
+                    Coaches: Henry Sjøen, Kari Eline Strandjord,<br> 
+                    Audun Liberg, Evelyn Saxegaard, <br>
+                    Hung Quang Thieu, Jie Li, Håvard Estensen <br>
+
+                    <br>
+                    COPYRIGHT © 2017
+
                 </p>
-                <button type="submit" class="btn btn-primary">Get Quote</button>
             </div>
             <div class="col-md-4">
-                <h4>Need Help ? Write Us. </h4>
+                <h4>Need Help ? Write Us </h4>
                 <hr>
                 <form>
                     <div class="row">
@@ -195,25 +191,20 @@
                     </div>
                 </form>
             </div>
+            <div class="row">
             <div class="col-md-4">
-                <a href="#"><i class="fa fa-facebook-square fa-3x color-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter-square fa-3x color-twitter"></i></a>
-                <a href="#"><i class="fa fa-google-plus-square fa-3x color-google-plus"></i></a>
-                <a href="#"><i class="fa fa-linkedin-square fa-3x color-linkedin"></i></a>
-                <a href="#"><i class="fa fa-pinterest-square fa-3x color-pinterest"></i></a>
+                <h4>Made by : </h4>
                 <hr>
                 <p>
-                    103, New Street,<br>
-                    New York, USA.<br>
-                    Call: +23-00-89-009<br>
-                    Email: demo@yourdomain.com<br>
-                </p>
+                    Maren T. Noreng | SCRUM master <br>
+                    Sondre Brekke | Software developer <br>
+                    Jørgen F. Bø | Software designer <br>
+                    Martha H. Andersen | Product developer 
+                    
 
-                2014 www.yourdomain.com | All Right Reserved
+                </p>
             </div>
         </div>
-
-
     </div>
 
     <!--END FOOTER SECTION -->
@@ -225,3 +216,4 @@
 
 </body>
 </html>
+
