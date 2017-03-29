@@ -1,11 +1,15 @@
-﻿<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
+<?php
+	session_start();
+
+	$username= $_SESSION['username'];
+	$password = $_SESSION['password'];
+	$name = $_SESSION['name'];
+    if (!$_SESSION["username"]) {
+        header("Location: index.html");
+    }
+?>                
+<!DOCTYPE html>
 <html lang="en">
-<!--<![endif]-->
-<!-- HEAD SECTION -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -21,8 +25,11 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!--FONTAWESOME MAIN STYLE -->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--SLIDER CSS CLASES -->
+    <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
     <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -31,15 +38,8 @@
 </head>
 <!--END HEAD SECTION -->
 <body>
-<?php
-    session_start();
-    if (!$_SESSION["username"]) {
-        header("Location: index.html");
-    }
-    $name = $_SESSION['name'];  
-?>
     <!-- NAV SECTION -->
-    <div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -61,69 +61,36 @@
                 <li><a href="http://folk.ntnu.no/sondrbre/viewFeedback.php"> <br>View Feedback<br><br></a></li>
                 <li><a href="http://folk.ntnu.no/sondrbre/logout.php"> <br>Log Out<br><br></a></li>
                 <li><a><center><?php echo "Welcome, <br>$name!";?><br><br></center></a></li>
-
-
                 </ul>
             </div>
 
         </div>
     </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="container">
-        <div class="row main-low-margin text-center">
-            <div class="col-md-5 col-sm-5">
-                <img src="/marthaan/BotLer/assets/img/Mashup1.png" alt="" width="30%" height="30%"/>
-                <p>
-                    <br>
-                    By adding assignments to your course, both mandatory and preparatory, your students recieve information directly into their BotLer application.
-                </p>
-            </div>
-
-            <div class="col-md-7 col-sm-7">
-                <h3>Add Assignment</h3>
-                <hr>
-                <form action="addedAssignments.php" method="post">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name">
-                            </div>
+    <div class="container align="center"">
+        <center>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h3>Change password</h3>
+            <hr>
+            <form action="endrePassord.php" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" required="required" name = "username" placeholder="username" readonly="readonly" value=<?php echo $username; ?> text-align="center" style="width: 300px;">
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD">
-                            </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" required="required"  name = "password" placeholder="Password" style="width: 300px;">
+                            <input type="password" class="form-control" required="required"  name = "password1" placeholder="Retype password" style="width: 300px;">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <textarea id="Textarea1" required="required" class="form-control" rows="3" name = "description" placeholder="Description"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Add Assignment</button>
-                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Change password</button>
                         </div>
-                    </div>
                 </form>
-            </div>
-        </div>
-        
-        </div>
-
-
+            </center>
     </div>
     <div class="space-bottom"></div>
-    <!--END CONTACT SECTION -->
-    <!--FOOTER SECTION -->
-
     <div id="footer">
         <div class="row">
             <div class="col-md-4">
@@ -191,7 +158,23 @@
     <script src="assets/js/jquery.js"></script>
     <!-- CORE BOOTSTRAP LIBRARY -->
     <script src="assets/js/bootstrap.min.js"></script>
+    <!-- SLIDER SCRIPTS LIBRARY -->
+    <script src="assets/Slides-SlidesJS-3/examples/playing/js/jquery.slides.min.js"></script>
+    <!-- CUSTOM SCRIPT-->
+    <script>
+        $(document).ready(function () {
+            $('#slides').slidesjs({
+                width: 940,
+                height: 528,
+                play: {
+                    active: true,
+                    auto: true,
+                    interval: 4000,
+                    swap: true
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
-

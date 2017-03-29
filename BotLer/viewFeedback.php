@@ -1,4 +1,29 @@
-﻿<!DOCTYPE html>
+﻿<?php
+
+    session_start();
+    $subject_code = $_SESSION['subject_code'];
+    $username= $_SESSION['username'];
+    $password = $_SESSION['password'];
+
+
+    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
+        if ($conn->connect_error){
+            die("feil: " . $conn->connect_error);
+        } else {
+        }
+    $db = mysqli_select_db($conn, 'jorgfb_botler_database');
+    $query = "SELECT attended, feedback, pace, time, subject, subject_code, lecturer.id, lecturer, username, password FROM feedbackTable, subjects, lecturer WHERE feedbackTable.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND username = '$username' AND password = '$password' ORDER BY time DESC";
+?>
+
+
+<?php
+    session_start();
+    $name = $_SESSION['name'];
+    if (!$_SESSION["username"]) {
+        header("Location: index.html");
+    }
+    ?>
+<!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -76,54 +101,44 @@
     <br>
     <br>
 
-    <div class="container">
-        <div class="row main-low-margin text-center">
-            <div class="col-md-5 col-sm-5">
-                <img src="/marthaan/BotLer/assets/img/Mashup1.png" alt="" width="30%" height="30%"/>
-                <p>
-                    <br>
-                    By adding assignments to your course, both mandatory and preparatory, your students recieve information directly into their BotLer application.
-                </p>
+            <div class="container" align="center">
+                <br>
+                <br>
+                <br>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                  
+                    <th>Attended</th>
+                    <th>Feedback</th>
+                    <th>Pace</th>
+                    <th>Time</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <?php
+                    if ($res = mysqli_query($conn, $query)){
+                        while ($row = $res -> fetch_array()) {
+                            $attended = $row[0];
+                            $feedback = $row[1];
+                            $pace = $row[2];
+                            $time = $row[3];
+                            echo "<tr>
+                                    <td>$attended</td>
+                                    <td>$feedback</td>
+                                    <td>$pace</td>
+                                    <td>$time</td>
+                            </tr>";
+                        }
+                    }   
+                    ?>
+                    </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div class="col-md-7 col-sm-7">
-                <h3>Add Assignment</h3>
-                <hr>
-                <form action="addedAssignments.php" method="post">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <textarea id="Textarea1" required="required" class="form-control" rows="3" name = "description" placeholder="Description"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Add Assignment</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        
-        </div>
-
-
-    </div>
-    <div class="space-bottom"></div>
-    <!--END CONTACT SECTION -->
-    <!--FOOTER SECTION -->
-
+    <br>
     <div id="footer">
         <div class="row">
             <div class="col-md-4">
