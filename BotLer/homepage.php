@@ -17,6 +17,7 @@
 		$_SESSION['username'] = $username;
 		$_SESSION['password'] = $password;
 
+
 		if($results = $conn->query("SELECT * FROM lecturer WHERE username= '$username' AND password= '$password'")) //Hvis resultatene stemmer med en bruker fra databasen min og tabellen prosjekt_info, skal den hente ut alle feltene. 
 		{
 			if($results->num_rows) { //hvis det er noen rader som stemmer
@@ -63,9 +64,11 @@
 					$subject_code = $row[2];
 					$subject_name = $row[3];
 
-	$_SESSION['subject_code'] = $subject_code;				
+	        $_SESSION['subject_code'] = $subject_code;	
+            $_SESSION['name'] = $name;			
 				}
 			}	
+
 	?>
 
 
@@ -79,6 +82,13 @@
 <!--<![endif]-->
 <!-- HEAD SECTION -->
 <head>
+    <?php
+    session_start();
+    if (!$_SESSION["username"]) {
+        header("Location: index.html");
+    }
+    $name = $_SESSION['name'];  
+    ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="">
@@ -86,7 +96,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Bootstrap Mutipager Template - Maxop</title>
+    <title>BotLer</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!--BOOTSTRAP MAIN STYLES -->
@@ -114,27 +124,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand"></a>
             </div>
             <div class="navbar-collapse collapse">
-            <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="30%" height="30%"> </a>
+            <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://folk.ntnu.no/marentno/viewAssignment.php"> <br>View Assignments<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/BotLer/addAssignment.php"> <br>Add Assignment<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/getFeedback.php"> <br>View Feedback<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/"> <br>Log Out<br></a></li>
-                <li><a>
-
-                <form action="http://folk.ntnu.no/marentno/endrePassord.php" method="post">
-                    <center>
-                        <input type="text" name ="username" placeholder="Username" style="text-align:center" readonly="readonly" value=<?php echo $username; ?>>
-                        <br>
-                        <input type="password" name ="password" placeholder="Password" style="text-align:center" value=<?php echo $password; ?>>
-                        <br>
-                        <td colspan="2" style="text-align:center;"><input type="submit" value="Change Password"></td>
-                    </center>
-                </form> 
+                <li><a href="http://folk.ntnu.no/sondrbre/homepage.php"> <br>Home<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/changePassword.php"> <br>Change Password<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/viewAssignment.php"> <br>View Assignments<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/addAssignment.php"> <br>Add Assignment<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/viewFeedback.php"> <br>View Feedback<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/logout.php"> <br>Log Out<br><br></a></li>
+                <li><a><center><?php echo "Welcome, <br>$name!";?><br><br></center></a></li>
 
                 </a></li>
 
@@ -231,10 +235,6 @@
 
 
     </div>
-    <div class="space-bottom"></div>
-    <!--END HOME SECTION -->
-    <!--FOOTER SECTION -->
-
     <div id="footer">
         <div class="row">
             <div class="col-md-4">
@@ -322,42 +322,3 @@
 
 </body>
 </html>
-
-
-<!--
-<!DOCTYPE html>
-<html>
-<header>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<a href = "http://folk.ntnu.no/marentno/login.php">
-		<center><img src ="Logo.png" width="30%" height="22%"></center>
-		</h1>
-	</a>
-</header>
-<center><h2><?php //echo "Velkommen, $name!";?></h2>
-
-<h4><?php //echo "Du er faglærer i $subject_code - $subject_name";?></h4></center>
-
-<center><form name = "Oppdater" action= "endrePassord.php" method="post"> 
-<input type="text" style="text-align:center" name="username" readonly="readonly" value=<?php //echo $username; ?>>
-<br> 
-
-<input type="password" style="text-align:center" name="password" value=<?php //echo $password; ?>>  --> <!-- Her lager jeg et tekstfelt hvor all skrift som ligger inni felten skal sentreres og feltet heter "brukernavn". Feltet skal også hente ut brukernavnet til brukeren hvor brukernavnet og passordet stemmer --> <!--
-<br>
-<td colspan="2" style="text-align:center;"><input type="submit" value="Change Password"></td>
-<br>
-<br>
-</form>
-<input type="button" onclick="location.href='http://folk.ntnu.no/marentno/viewAssignment.php';" value="View Assignments" />
-<input type="button" onclick="location.href='http://folk.ntnu.no/marentno/addAssignment.php';" value="Add Assignment" />
-<input type="button" onclick="location.href='http://folk.ntnu.no/marentno/getFeedback.php';" value="View Feedback" />
-<input type="button" onclick="location.href='http://folk.ntnu.no/marentno/';" value="Log Out" />
-</center>
-<center>
-	<br>
-	COPYRIGHT &#169; 2017 
-	</center>
-</html>
-
-
--->

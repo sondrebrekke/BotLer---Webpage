@@ -1,4 +1,31 @@
-﻿<!DOCTYPE html>
+﻿ <?php
+    session_start();
+    $subject_code = $_SESSION['subject_code'];
+    $username= $_SESSION['username'];
+    $password = $_SESSION['password'];
+    
+    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
+        if ($conn->connect_error){
+            die("feil: " . $conn->connect_error);
+        } else {
+
+        }
+
+    $db = mysqli_select_db($conn, 'jorgfb_botler_database');
+    $id = trim($_POST['id']);
+    session_start();
+    $_SESSION['id'] = $id;
+    $query = "SELECT name, description, deadline FROM assignments WHERE id= '$id'" ;
+    if ($res = mysqli_query($conn, $query)){
+        while ($row = $res -> fetch_array()) {
+            $name = $row[0];
+            $description = $row[1];
+            $deadline = $row[2];
+        }   
+    }
+?>
+
+<!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -36,7 +63,7 @@
     if (!$_SESSION["username"]) {
         header("Location: index.html");
     }
-    $name = $_SESSION['name'];  
+    $nameL = $_SESSION['name'];  
 ?>
     <!-- NAV SECTION -->
     <div class="navbar navbar-default navbar-fixed-top">
@@ -60,7 +87,7 @@
                 <li><a href="http://folk.ntnu.no/sondrbre/addAssignment.php"> <br>Add Assignment<br><br></a></li>
                 <li><a href="http://folk.ntnu.no/sondrbre/viewFeedback.php"> <br>View Feedback<br><br></a></li>
                 <li><a href="http://folk.ntnu.no/sondrbre/logout.php"> <br>Log Out<br><br></a></li>
-                <li><a><center><?php echo "Welcome, <br>$name!";?><br><br></center></a></li>
+                <li><a><center><?php echo "Welcome, <br>$nameL!";?><br><br></center></a></li>
 
 
                 </ul>
@@ -75,7 +102,6 @@
     <br>
     <br>
     <br>
-
     <div class="container">
         <div class="row main-low-margin text-center">
             <div class="col-md-5 col-sm-5">
@@ -87,28 +113,28 @@
             </div>
 
             <div class="col-md-7 col-sm-7">
-                <h3>Add Assignment</h3>
+                <h3>Edit Assignment</h3>
                 <hr>
-                <form action="addedAssignments.php" method="post">
+                <form action="editedAssignment.php" method="post">
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name">
+                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name" value = "<?php echo $name;?>">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD">
+                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD" value = "<?php echo $deadline;?>">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group">
-                                <textarea id="Textarea1" required="required" class="form-control" rows="3" name = "description" placeholder="Description"></textarea>
+                                <textarea id="Textarea1" required="required" class="form-control" rows="3" name = "description" placeholder="Description"><?php echo $description;?></textarea>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Add Assignment</button>
+                                <button type="submit" class="btn btn-primary">Edit Assignment</button>
                             </div>
                         </div>
                     </div>

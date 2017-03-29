@@ -4,6 +4,7 @@
 
 	$username= $_SESSION['username'];
 	$password = $_SESSION['password'];
+    $nameL = $_SESSION['name'];
 	
 	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
 		if ($conn->connect_error){
@@ -43,14 +44,26 @@ $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12', 'jorgfb_botl
 		$deadline = trim($_POST['deadline']); 
 	}
 
-if (deadline.substr(4)=="-" and deadline.substr(7)=="-") {
+if ($deadline[4]=="-" and $deadline[7]=="-") {
     $sql = "INSERT INTO assignments (name, subject, description, deadline) VALUES ('$name', '$subject_code', '$description', '$deadline')";
-}
-
-if ($conn->query($sql) === TRUE) {
+    $melding = "Your assignment was added successfully!";
+    if ($conn->query($sql) === TRUE) {
+    }
     
-    ?>
+
+}
+else{
+    $melding = "Your assignment was NOT added successfully!";
+}
+?>
+
 <!DOCTYPE html>
+<?php
+    session_start();
+    if (!$_SESSION["username"]) {
+        header("Location: index.html");
+    }
+?>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -91,71 +104,39 @@ if ($conn->query($sql) === TRUE) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand"></a>
             </div>
             <div class="navbar-collapse collapse">
             <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://folk.ntnu.no/marentno/viewAssignment.php"> <br>View Assignments<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/BotLer/addAssignment.php"> <br>Add Assignment<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/getFeedback.php"> <br>View Feedback<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/"> <br>Log Out<br></a></li>
-                <li><a>
-
-                <form action="http://folk.ntnu.no/marentno/endrePassord.php" method="post">
-                    <center>
-                        <input type="text" name ="username" placeholder="Username" style="text-align:center" readonly="readonly" value=<?php echo $username; ?>>
-                        <br>
-                        <input type="password" name ="password" placeholder="Password" style="text-align:center" value=<?php echo $password; ?>>
-                        <br>
-                        <td colspan="2" style="text-align:center;"><input type="submit" value="Change Password"></td>
-                    </center>
-                </form> 
-
-                </a></li>
-
-
+                <li><a href="http://folk.ntnu.no/sondrbre/homepage.php"> <br>Home<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/changePassword.php"> <br>Change Password<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/viewAssignment.php"> <br>View Assignments<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/addAssignment.php"> <br>Add Assignment<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/viewFeedback.php"> <br>View Feedback<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/logout.php"> <br>Log Out<br><br></a></li>
+                <li><a><center><?php echo "Welcome, <br>$nameL!";?><br><br></center></a></li>
                 </ul>
             </div>
 
         </div>
     </div>
-    <!--END NAV SECTION -->
 
     <br>
     <br>
     <div class="section">
         <div class="container">
-
-
+            <br>
             <div class="row main-low-margin">
                 <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                 <center>        
-                <h3> YOUR ASSIGNMENT WAS ADDED SUCCESSFULLY </h3>
+                <h3> <?php echo $melding ?></h3>
                 </center>    
                 </div>
             </div>
-
-
-        </div>
-    </div>
-    <br>
-    <br>
-
-
-    <!-- CONTACT SECTION -->
-    <div class="section">
-        <div class="container">
-
-
-            <div class="row main-low-margin">
-                <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                    
-                </div>
-            </div>
-
-
         </div>
     </div>
 
@@ -276,33 +257,4 @@ if ($conn->query($sql) === TRUE) {
     <script src="assets/js/bootstrap.min.js"></script>
 
 </body>
-
-
-
-
-
 </html>
-
-
-
-    <?php
-
-
-
-
-
-
-
-
-
-
-
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
-
-$conn->close();
-
-
-
-?>
