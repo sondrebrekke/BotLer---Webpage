@@ -12,7 +12,7 @@
         } else {
         }
     $db = mysqli_select_db($conn, 'jorgfb_botler_database');
-    $query = "SELECT attended, feedback, pace, time, subject, subject_code, lecturer.id, lecturer, username, password FROM feedbackTable, subjects, lecturer WHERE feedbackTable.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND username = '$username' AND password = '$password'";
+    $query = "SELECT attended, feedback, pace, time, subject, subject_code, lecturer.id, lecturer, username, password FROM feedbackTable, subjects, lecturer WHERE feedbackTable.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND username = '$username' AND password = '$password' AND time BETWEEN date_add(NOW(),INTERVAL -8 DAY) AND NOW() ORDER BY time DESC";
 ?>
 
 
