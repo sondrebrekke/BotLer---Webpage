@@ -5,14 +5,13 @@
     $username= $_SESSION['username'];
     $password = $_SESSION['password'];
 
-
     $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
         if ($conn->connect_error){
             die("feil: " . $conn->connect_error);
         } else {
         }
     $db = mysqli_select_db($conn, 'jorgfb_botler_database');
-    $query = "SELECT attended, feedback, pace, time, subject, subject_code, lecturer.id, lecturer, username, password FROM feedbackTable, subjects, lecturer WHERE feedbackTable.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND username = '$username' AND password = '$password' ORDER BY time DESC";
+    $query1 = "SELECT attended, feedback, pace, time, subject, subject_code, lecturer.id, lecturer, username, password FROM feedbackTable, subjects, lecturer WHERE feedbackTable.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND username = '$username' AND password = '$password' ORDER BY time DESC";
 ?>
 
 
@@ -100,11 +99,112 @@
     <br>
     <br>
     <br>
+    <br>
+    <br>
+    <center>
+    <h2>Feedback for <?php echo $subject_code; ?></h2>
+        <?php
+
+        $query = "SELECT count(*) FROM feedbackTable WHERE pace = 'TOO FAST' AND subject = '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $too_fast = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE pace = 'JUST RIGHT' AND subject = '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $just_right = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE pace = 'TOO SLOW' AND subject = '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $too_slow = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE attended = 'YES' AND subject = '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $attended = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE attended = 'NO' AND subject = '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $not_attended = (int)$row[0];
+            }
+        }
+    ?>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart1);
+      google.charts.setOnLoadCallback(drawChart2);
+
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart1() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Pace');
+        data.addColumn('number', 'Number');
+        data.addRows([
+          ['Too slow', <?php echo $too_slow; ?>],
+          ['Too fast', <?php echo $too_fast; ?>],
+          ['Just right', <?php echo $just_right; ?>]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Feedbacks about lecture pace',
+                       'width':475,
+                       'height':250};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
+        chart.draw(data, options);
+      }
+
+    function drawChart2() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Attended');
+        data.addColumn('number', 'Number');
+        data.addRows([
+          ['Attended', <?php echo $attended; ?>],
+          ['Did not attend', <?php echo $not_attended; ?>],
+        ]);
+
+        // Set chart options
+        var options = {'title':'Attended vs. not attended',
+                       'width':475,
+                       'height':250};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <table class="columns">
+      <tr>
+        <td><div id="chart_div1"></div></td>
+        <td><div id="chart_div2"></div></td>
+      </tr>
+    </table>
+  </body>
+</center>
 
             <div class="container" align="center">
-                <br>
-                <br>
-                <br>
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -119,7 +219,7 @@
                 <tbody>
                   <tr>
                     <?php
-                    if ($res = mysqli_query($conn, $query)){
+                    if ($res = mysqli_query($conn, $query1)){
                         while ($row = $res -> fetch_array()) {
                             $attended = $row[0];
                             $feedback = $row[1];

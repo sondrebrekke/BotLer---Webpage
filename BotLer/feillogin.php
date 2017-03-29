@@ -54,7 +54,7 @@
 
                 <form action="homepage.php" method="post">
                     <center>
-                    	<p>Feil brukernavn elle passord, prøv igjen!</p>
+                    	<p>Wrong username or password, please try again!</p>
                         <input type="text" name ="username" placeholder="Username" style="text-align:center">
                         <br>
                         <input type="password" name ="password" placeholder="Password" style="text-align:center">
@@ -63,8 +63,6 @@
                     </center>
                 </form>
                 </a></li>
-
-
                 </ul>
             </div>
 

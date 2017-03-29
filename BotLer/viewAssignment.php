@@ -56,6 +56,7 @@
     if (!$_SESSION["username"]) {
         header("Location: index.html");
     }
+    $name = $_SESSION["name"];
 ?>
     <!-- NAV SECTION -->
     <div class="navbar navbar-default navbar-fixed-top">
@@ -98,17 +99,16 @@
     <br>
 <div class="container" align="center">
         
-              <p></p>            
+              <h2>Assigments for <?php echo $subject_code ?></h2>            
               <table class="table table-striped">
                 <thead>
                   <tr>
-                  
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Subject</th>
                     <th>Description</th>
                     <th>Deadline</th>
-
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,11 +125,12 @@
                             $description = $row[3];
                             $deadline = $row[4];
                             echo "<tr>
-                                    <td>$id</td>
                                     <td>$name</td>
                                     <td>$subject</td>
                                     <td>$description</td>
                                     <td>$deadline</td>
+                                    <td><form action='editAssignment.php' method='POST'><input type='hidden' name='id' value='".$id."'><input type='submit' name='submit-btn' value='Edit'></form></td>
+                                    <td><form action='deleteAssignment.php' method='POST'><input type='hidden' name='id' value='".$id."'><input type='submit' name='submit-btn' value='Delete'></form></td>
                             </tr>";
                         }   
                     }
@@ -142,29 +143,6 @@
               </table>
             </div>
     <br>
-    <div class="space-bottom"></div>
-
-    <div class="col-md-7 col-sm-7">
-        <center>
-        <center><form name = "Endre" action= "editAssignment.php" method="post"> 
-        <input type="text" style="text-align:center" name="id" placeholder="ID">
-        <td colspan="2" style="text-align:center;"><input type="submit" value="Edit Assignment"></td>
-        </form>
-        </center>
-
-    </div>
-        <center>
-        <div class="col-md-5 col-sm-5 text-center">
-        <center><form name = "Delete" action= "deleteAssignment.php" method="post"> 
-        <input type="text" style="text-align:center" name="id" placeholder="ID">
-        <td colspan="2" style="text-align:center;"><input type="submit" value="Delete Assignment"></td>
-        </form>
-        </div>
-        </center>
-
-
-    </div>
-    <div class="space-bottom"></div>
     <div id="footer">
         <div class="row">
             <div class="col-md-4">
