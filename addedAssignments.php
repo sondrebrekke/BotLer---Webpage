@@ -159,19 +159,19 @@ else{
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name">
+                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name" pattern="^[a-zA-Z0-9]+$" >
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD">
+                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD" pattern="^[a-zA-Z0-9]+$" >
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group">
-                                <textarea id="Textarea1" required="required" class="form-control" rows="3" name = "description" placeholder="Description"></textarea>
+                                <textarea id="Textarea1" required="required" class="form-control" rows="3" name = "description" placeholder="Description" pattern="^[a-zA-Z0-9]+$" ></textarea>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Add Assignment</button>
