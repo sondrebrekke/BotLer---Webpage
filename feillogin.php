@@ -176,28 +176,28 @@
                 </p>
             </div>
             <div class="col-md-4">
-                <h4>Need Help ? Write Us </h4>
+                <h4>Have any questions, or want to sign up? </h4>
                 <hr>
-                <form>
+                <form action="sendEmail.php" method="post">
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" placeholder="Name">
+                                <input type="text" class="form-control" required="required" name= "name" placeholder="Name">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" placeholder="Email address">
+                                <input type="text" class="form-control" required="required" name = "email" placeholder="Email address">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group">
-                                <textarea name="message" id="message" required="required" class="form-control" rows="3" placeholder="Message"></textarea>
+                                <textarea name="message" id="message" required="required" name = "message" class="form-control" rows="3" placeholder="Message"></textarea>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit Request</button>
+                                <button type="submit" class="btn btn-primary">Submit Message</button>
                             </div>
                         </div>
                     </div>
