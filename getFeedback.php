@@ -1,9 +1,4 @@
 <?php
-
-	session_start();
-	$subject_code = $_SESSION['subject_code'];
-
-
 	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
 		if ($conn->connect_error){
 			die("feil: " . $conn->connect_error);

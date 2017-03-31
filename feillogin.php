@@ -14,7 +14,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Bootstrap Mutipager Template - Maxop</title>
+    <title>BotLer</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!--BOOTSTRAP MAIN STYLES -->
@@ -54,7 +54,7 @@
 
                 <form action="homepage.php" method="post">
                     <center>
-                    	<h2>Feil brukernavn elle passord, prøv igjen!</h2>
+                    	<p>Wrong username or password, please try again!</p>
                         <input type="text" name ="username" placeholder="Username" style="text-align:center">
                         <br>
                         <input type="password" name ="password" placeholder="Password" style="text-align:center">
@@ -63,8 +63,6 @@
                     </center>
                 </form>
                 </a></li>
-
-
                 </ul>
             </div>
 
@@ -73,8 +71,7 @@
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
-    <!-- SLIDER SECTION -->
-    <div id="slides">
+    <<div id="slides">
         <img src="/marthaan/BotLer/assets/img/ProgramvareUtviklingprosjekt-7.jpg" alt="" />
         <img src="/marthaan/BotLer/assets/img/ProgramvareUtviklingprosjekt.jpg" alt="" />
         <img src="/marthaan/BotLer/assets/img/ProgramvareUtviklingprosjekt-6.jpg" alt="" />

@@ -5,24 +5,23 @@
     $username= $_SESSION['username'];
     $password = $_SESSION['password'];
 
-
     $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
         if ($conn->connect_error){
             die("feil: " . $conn->connect_error);
         } else {
         }
     $db = mysqli_select_db($conn, 'jorgfb_botler_database');
-    $query = "SELECT attended, feedback, pace, time, subject, subject_code, lecturer.id, lecturer, username, password FROM feedbackTable, subjects, lecturer WHERE feedbackTable.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND username = '$username' AND password = '$password'";
+    $query1 = "SELECT attended, feedback, pace, time, subject, subject_code, lecturer.id, lecturer, username, password FROM feedbackTable, subjects, lecturer WHERE feedbackTable.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND BINARY username = BINARY '$username' AND BINARY password = BINARY '$password' AND time BETWEEN date_add(NOW(),INTERVAL -7 DAY) AND NOW() ORDER BY time DESC";
 ?>
 
 
 <?php
     session_start();
+    $name = $_SESSION['name'];
     if (!$_SESSION["username"]) {
         header("Location: index.html");
     }
     ?>
-
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -56,11 +55,20 @@
 </head>
 <!--END HEAD SECTION -->
 <body>
+<?php
+    session_start();
+    if (!$_SESSION["username"]) {
+        header("Location: index.html");
+    }
+    $name = $_SESSION['name'];  
+?>
     <!-- NAV SECTION -->
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -70,13 +78,13 @@
             <div class="navbar-collapse collapse">
             <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://folk.ntnu.no/marentno/BotLer/homepage.php"> <br>Homepage<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/viewAssignment.php"> <br>View Assignments<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/BotLer/addAssignment.php"> <br>Add Assignment<br></a></li>
-                <li><a href="http://folk.ntnu.no/marentno/BotLer/viewFeedback.php"> <br>View Feedback<br></a></li>
-                <li><a href="http://folk.ntnu.no/BotLer/index.html/"> <br>Log Out<br></a></li>
-                <li><a>
-                </a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/homepage.php"> <br>Home<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/changePassword.php"> <br>Change Password<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/viewAssignment.php"> <br>View Assignments<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/addAssignment.php"> <br>Add Assignment<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/viewFeedback.php"> <br>View Feedback<br><br></a></li>
+                <li><a href="http://folk.ntnu.no/sondrbre/logout.php"> <br>Log Out<br><br></a></li>
+                <li><a><center><?php echo "Welcome, <br>$name!";?><br><br></center></a></li>
 
 
                 </ul>
@@ -84,52 +92,121 @@
 
         </div>
     </div>
-    <!--END NAV SECTION -->
-    <!-- CONTACT SECTION -->
 
-    <div class="section">
-        <div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <center>
+    <h2>Feedback for <?php echo $subject_code; ?></h2>
+        <?php
+
+        $query = "SELECT count(*) FROM feedbackTable WHERE pace = 'TOO FAST' AND BINARY subject = BINARY '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $too_fast = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE pace = 'JUST RIGHT' AND BINARY subject = BINARY '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $just_right = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE pace = 'TOO SLOW' AND BINARY subject = BINARY '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $too_slow = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE attended = 'YES' AND BINARY subject = BINARY '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $attended = (int)$row[0];
+            }
+        }
+        $query = "SELECT count(*) FROM feedbackTable WHERE attended = 'NO' AND BINARY subject = BINARY '$subject_code'";
+        if ($res = mysqli_query($conn, $query)){
+            while ($row = $res -> fetch_array()) {
+                $not_attended = (int)$row[0];
+            }
+        }
+    ?>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart1);
+      google.charts.setOnLoadCallback(drawChart2);
 
 
-            <div class="row main-low-margin">
-                <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                    
-                </div>
-            </div>
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart1() {
 
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Pace');
+        data.addColumn('number', 'Number');
+        data.addRows([
+          ['Too slow', <?php echo $too_slow; ?>],
+          ['Too fast', <?php echo $too_fast; ?>],
+          ['Just right', <?php echo $just_right; ?>]
+        ]);
 
-        </div>
-    </div>
+        // Set chart options
+        var options = {'title':'Feedbacks about lecture pace all-time',
+                       'width':475,
+                       'height':250};
 
-    <div class="container">
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
+        chart.draw(data, options);
+      }
 
-    
-        <div class="row main-low-margin text-center">
-        <!--
-            <div class="col-md-5 col-sm-5">
-                <div class="circle-body"><i class="fa fa-flask fa-5x  icon-set"></i></div>
-                <h3>FEEDBACK</h3>
-                <p>
-                    Through the BotLer app the students are given the opportunity to give feedback
-                    to the lecturers. Here they can comment on the pace, ask for recaps and share
-                    their opinions concerning the lectures. 
-                </p>
-            </div>
-    -->
-            <div class="col-md-7 col-sm-7">
-            <br>
-            
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            </head>
-            <body>
+    function drawChart2() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Attended');
+        data.addColumn('number', 'Number');
+        data.addRows([
+          ['Attended', <?php echo $attended; ?>],
+          ['Did not attend', <?php echo $not_attended; ?>],
+        ]);
+
+        // Set chart options
+        var options = {'title':'Attended vs. not attended all-time',
+                       'width':475,
+                       'height':250};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <table class="columns">
+      <tr>
+        <td><div id="chart_div1"></div></td>
+        <td><div id="chart_div2"></div></td>
+      </tr>
+    </table>
+  </body>
+</center>
+    <center><b><h4>Feedback from the last week</b></h4></center>
 
             <div class="container" align="center">
-        
-              <p></p>            
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -144,7 +221,7 @@
                 <tbody>
                   <tr>
                     <?php
-                    if ($res = mysqli_query($conn, $query)){
+                    if ($res = mysqli_query($conn, $query1)){
                         while ($row = $res -> fetch_array()) {
                             $attended = $row[0];
                             $feedback = $row[1];
@@ -163,55 +240,7 @@
                 </tbody>
               </table>
             </div>
-            </div>
-        </div>
-        <div class="row main-low-margin ">
-
-<!--
-
-            <div class="col-md-7 col-sm-7">
-                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit </h3>
-                <hr>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                        Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                </p>
-            </div>
-            <div class="col-md-5 col-sm-5 text-center">
-                <div class="circle-body"><i class="fa fa-tint fa-5x  icon-set"></i></div>
-                <h3>OUR LOCATION </h3>
-                <p>
-                    <p>
-                        103, New Street,<br>
-                        New York, USA.<br>
-                        Call: +23-00-89-009<br>
-                        Email: demo@yourdomain.com<br>
-                    </p>
-
-                </p>
-            </div>
-        </div>
--->
-
-    </div>
-    <div class="space-bottom"></div>
-
-    
-    <!--END CONTACT SECTION -->
-    <!--FOOTER SECTION -->
-
+    <br>
     <div id="footer">
         <div class="row">
             <div class="col-md-4">
@@ -272,7 +301,7 @@
             </div>
         </div>
     </div>
-    </div>
+
     <!--END FOOTER SECTION -->
     <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY LIBRARY -->
@@ -282,3 +311,4 @@
 
 </body>
 </html>
+
