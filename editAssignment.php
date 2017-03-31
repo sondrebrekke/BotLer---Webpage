@@ -119,19 +119,19 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name" value = "<?php echo $name;?>" pattern="^[a-zA-Z0-9]+$" >
+                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name" value = "<?php echo $name;?>">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD" value = "<?php echo $deadline;?>" pattern="^[a-zA-Z0-9]+$" >
+                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD" value = "<?php echo $deadline;?>">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group">
-                                <textarea id="Textarea1" required="required" pattern="^[a-zA-Z0-9]+$" class="form-control" rows="3" name = "description" placeholder="Description"><?php echo $description;?></textarea>
+                                <textarea id="Textarea1" required="required" class="form-control" rows="3" name = "description" placeholder="Description"><?php echo $description;?></textarea>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Edit Assignment</button>
