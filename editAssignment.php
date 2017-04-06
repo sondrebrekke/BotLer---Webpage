@@ -81,12 +81,12 @@
             <div class="navbar-collapse collapse">
             <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://folk.ntnu.no/sondrbre/homepage.php"> <br>Home<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/changePassword.php"> <br>Change Password<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/viewAssignment.php"> <br>View Assignments<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/addAssignment.php"> <br>Add Assignment<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/viewFeedback.php"> <br>View Feedback<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/logout.php"> <br>Log Out<br><br></a></li>
+                <li><a href="homepage.php" id = "home"> <br>Home<br><br></a></li>
+                <li><a href="changePassword.php" id = "changePassword"> <br>Change Password<br><br></a></li>
+                <li><a href="viewAssignment.php" id = "viewAssignment"> <br>View Assignments<br><br></a></li>
+                <li><a href="addAssignment.php" id = "addAssignment"> <br>Add Assignment<br><br></a></li>
+                <li><a href="viewFeedback.php" id = "viewFeedback"> <br>View Feedback<br><br></a></li>
+                <li><a href="logout.php" id = "logOut"> <br>Log Out<br><br></a></li>
                 <li><a><center><?php echo "Welcome, <br>$nameL!";?><br><br></center></a></li>
 
 
@@ -105,7 +105,7 @@
     <div class="container">
         <div class="row main-low-margin text-center">
             <div class="col-md-5 col-sm-5">
-                <img src="/marthaan/BotLer/assets/img/Mashup1.png" alt="" width="30%" height="30%"/>
+                <img src="/marthaan/BotLer/assets/img/botler1.png" alt="" width="30%" height="30%"/>
                 <p>
                     <br>
                     By adding assignments to your course, both mandatory and preparatory, your students recieve information directly into their BotLer application.
@@ -119,12 +119,12 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name" value = "<?php echo $name;?>" pattern="^[a-zA-Z0-9]+$" >
+                                <input type="text" class="form-control" required="required" name = "name" placeholder="Name" value = "<?php echo $name;?>" pattern="^[a-zA-Z0-9\s]+$" >
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD" value = "<?php echo $deadline;?>" pattern="^[a-zA-Z0-9]+$" >
+                                <input type="text" class="form-control" required="required"  name = "deadline" placeholder="Deadline:  YYYY-MM-DD" value = "<?php echo $deadline;?>">
                             </div>
                         </div>
                     </div>

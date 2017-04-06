@@ -1,5 +1,4 @@
 <?php
-
 	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12', 'jorgfb_botler_database'); //Her kobler jeg meg til området mitt på nvselev.no. Jeg skriver inn server, brukernavn, passord og databsenavnet.
 	if (!mysqli_set_charset($conn, "utf8")) { //Her sier jeg at hvis ikke tegnsettingen er satt til UTF-8, skal den "skrive ut" på siden Feil ved lasting av tegnsettet utf8. Brukeren vil også få en feilmelding.
 		printf("Feil ved lasting av tegnsettet utf8: %s\n", mysqli_error($conn));
@@ -34,7 +33,10 @@
 		}
 		
 	}
-
+    session_start();
+    if (!$_SESSION["username"]) {
+        header("Location: index.html");
+    }
 	$db = mysqli_select_db($conn, 'jorgfb_botler_database');	
 			$query = "SELECT id,name,subject_code, subject_name FROM lecturer,subjects WHERE lecturer.id = subjects.lecturer AND BINARY username= BINARY '$username' AND BINARY password= BINARY '$password'"  ;
 			if ($res = mysqli_query($conn, $query)){
@@ -50,6 +52,9 @@
 			}	
             $conn->close();
 
+        $name = $_SESSION['name'];  
+
+
 	?>
 
 
@@ -63,13 +68,6 @@
 <!--<![endif]-->
 <!-- HEAD SECTION -->
 <head>
-    <?php
-    session_start();
-    if (!$_SESSION["username"]) {
-        header("Location: index.html");
-    }
-    $name = $_SESSION['name'];  
-    ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="">
@@ -113,12 +111,12 @@
             <div class="navbar-collapse collapse">
             <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://folk.ntnu.no/sondrbre/homepage.php"> <br>Home<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/changePassword.php"> <br>Change Password<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/viewAssignment.php"> <br>View Assignments<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/addAssignment.php"> <br>Add Assignment<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/viewFeedback.php"> <br>View Feedback<br><br></a></li>
-                <li><a href="http://folk.ntnu.no/sondrbre/logout.php"> <br>Log Out<br><br></a></li>
+                <li><a href="homepage.php" id = "home"> <br>Home<br><br></a></li>
+                <li><a href="changePassword.php" id = "changePassword"> <br>Change Password<br><br></a></li>
+                <li><a href="viewAssignment.php" id = "viewAssignment"> <br>View Assignments<br><br></a></li>
+                <li><a href="addAssignment.php" id = "addAssignment"> <br>Add Assignment<br><br></a></li>
+                <li><a href="viewFeedback.php" id = "viewFeedback"> <br>View Feedback<br><br></a></li>
+                <li><a href="logout.php" id = "logOut"> <br>Log Out<br><br></a></li>
                 <li><a><center><?php echo "Welcome, <br>$name!";?><br><br></center></a></li>
 
                 </a></li>
@@ -144,7 +142,7 @@
     <div class="container">
         <div class="row main-low-margin text-center">
             <div class="col-md-4 col-sm-4">
-                <img src="/marthaan/BotLer/assets/img/Mashup1.png" alt="" width="75%" height="65%"/>
+                <img src="/marthaan/BotLer/assets/img/botler1.png" alt="" width="60%" height="60%"/>
                 <h3>ASSIGNMENTS</h3>
                 <p>
                     The students will receive information on upcoming work, both mandatory and preparatory
@@ -152,7 +150,7 @@
                 </p>
             </div>
             <div class="col-md-4 col-sm-4">
-                <img src="/marthaan/BotLer/assets/img/Mashup2.png" alt="" width="70%" height="70%"/>
+                <img src="/marthaan/BotLer/assets/img/botler2.png" alt="" width="60%" height="60%"/>
                 <h3>STATISTICS</h3>
                 <p>
                     The app will provide the students with information about their progress in the course
@@ -160,7 +158,7 @@
                 </p>
             </div>
             <div class="col-md-4 col-sm-4">
-                <img src="/marthaan/BotLer/assets/img/Mashup3.png" alt="" width="70%" height="70%"/>
+                <img src="/marthaan/BotLer/assets/img/botler3.png" alt="" width="60%" height="60%"/>
                 <h3>FEEDBACK</h3>
                 <p>
                     The students will be given the opportunity to fill out a survey to rate each lecture 
