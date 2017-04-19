@@ -37,13 +37,6 @@
         <link href="assets/css/style.css" rel="stylesheet" />
     </head>
     <body>
-        <!--<?php
-            session_start();
-            if (!$_SESSION["username"]) {
-                header("Location: index.html");
-            }
-            $name = $_SESSION['name'];  
-        ?>-->
         <div class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -263,8 +256,6 @@
                         Sondre Brekke | Software developer <br>
                         Jørgen F. Bø | Software designer <br>
                         Martha H. Andersen | Product developer 
-                        
-
                     </p>
                 </div>
             </div>

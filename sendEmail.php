@@ -1,20 +1,19 @@
 <?php
-
-$records = array(); //Lager en array som informasjonen skal legges inn i.
-	if(!empty($_POST)) //Hvis den informasjonen brukeren tastet inn i feltene fra login.php IKKE er tomme (fortsetter nedover)
-	{
-				
-		$email = trim($_POST['email']); //Skal den trimme og legge $_POST brukernavn inn i variabelen $brukernavn slik at den informasjonen brukeren skrev inn enkelt kan hentes ut. 
-		$name = trim($_POST['name']);	//Skal den trimme og legge $_POST passord inn i variabelen $passord slik at den informasjonen brukeren skrev inn enkelt kan hentes ut. 
+	$records = array(); //Creates an array where the informartion will be stored. 
+	if(!empty($_POST)) //If the information the user inserted is not EMPTY, it shall create the following variables. 
+	{				
+		$email = trim($_POST['email']); 
+		$name = trim($_POST['name']);
 		$message = trim($_POST['message']);
-
-        
-		
 	}
-
-// send email
-mail("botlerproject@gmail.com","Question from $name, $email, submitted at BotLer-webpage",$message);
-header('Location: ' . $_SERVER['HTTP_REFERER']);
-exit;
+	else{
+		//Othervise head to index.html
+		header("Location: index.html"); exit;
+	}
+	
+	// send email to our email-address
+	mail("botlerproject@gmail.com","Question from $name, $email, submitted at BotLer-webpage",$message);
+	header('Location: ' . $_SERVER['HTTP_REFERER']);
+	exit;
 ?>
 
