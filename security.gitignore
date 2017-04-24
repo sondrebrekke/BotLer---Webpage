@@ -1,3 +1,0 @@
-<?php
-	$passwordDB = 'park12';
-?>
