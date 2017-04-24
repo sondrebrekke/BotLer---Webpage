@@ -1,0 +1,3 @@
+<?php
+	$passwordDB = 'park12';
+?>

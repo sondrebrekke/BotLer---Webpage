@@ -62,7 +62,7 @@
                 <br>
                 <h3>Change password</h3>
                 <hr>
-                <form action="endrePassord.php" method="post">
+                <form action="endrePassord.php" method="post" id="changePasswordForm">
                     <div class="form-group">
                         <input type="text" class="form-control" required="required" name = "username" placeholder="username" readonly="readonly" value=<?php echo $username; ?> text-align="center" style="width: 300px;">
                     </div>
