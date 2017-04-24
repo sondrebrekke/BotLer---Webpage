@@ -1,6 +1,8 @@
 <?php
-	$records = array(); //Creates an array where the informartion will be stored. 
-	if(!empty($_POST)) //If the information the user inserted is not EMPTY, it shall create the following variables. 
+	//Creates an array where the informartion will be stored. 
+	$records = array(); 
+	//If the information the user inserted is not EMPTY, it shall create the following variables. 
+	if(!empty($_POST)) 
 	{				
 		$email = trim($_POST['email']); 
 		$name = trim($_POST['name']);

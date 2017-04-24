@@ -1,58 +1,3 @@
-<?php
-    include 'security.php';
-    //Connects to the DB
-	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB, 'jorgfb_botler_database'); 
-    //Sets the charset to utf-8
-	$conn->set_charset('utf8'); 
-
-    //Creates an empty array where the results will be stored.
-	$records = array(); 
-    //If the login-form is not empty
-	if(!empty($_POST)) 
-	{		
-        //Trims the username the user typed in, and stores it in the variable $username.
-		$username = trim($_POST['username']); 
-        //Trims the password the user typed in, and stores it in the variable $password.
-		$password = trim($_POST['password']); 
-		
-        //Starts a session and adds the username and password to the session. 
-        session_start(); 
-		$_SESSION['username'] = $username;
-        $password = $conn->real_escape_string($password);
-        $_SESSION['password'] = $password;
-
-        //Gets the id, name, subject code and subject name from the DB for the spesific lecturer that logged in. 
-		if($results = $conn->query("SELECT id,name,subject_code, subject_name FROM lecturer,subjects WHERE lecturer.id = subjects.lecturer AND BINARY username= BINARY '$username' AND BINARY password= BINARY '$password'")){
-			if($results->num_rows) {
-				while($row = $results->fetch_array()) {
-                    $id = $row[0];
-                    $name = $row[1];
-                    $subject_code = $row[2];
-                    $subject_name = $row[3];
-
-                    $_SESSION['id'] = $id;
-                    $_SESSION['subject_code'] = $subject_code;  
-                    $_SESSION['subject_name'] = $subject_name;
-                    $_SESSION['name'] = $name;      				
-                }
-
-				$results->free();
-			}
-			else{
-                //If username/passwords don't match with the DB it will go to this page.
-				header("Location: wrongLogin.php"); 
-			}
-		}
-	}
-    //Sets the charset to utf8
-    $conn->set_charset('utf8');
-    session_start();
-    //If a session is not active, in other word the user is not logged in, it will head to index.html.
-    if (!$_SESSION["username"]) {
-        header("Location: index.html"); 
-    }
-    $name = $_SESSION['name'];
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -76,23 +21,23 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand"></a>
+                    <a class="navbar-brand" href="#"></a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <br>
-                    <!-- Displays the menu -->
-                    <img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
+                <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="30%" height="30%"> </a>
                     <ul class="nav navbar-nav navbar-right">
-                    <li><a href="homepage.php" id = "home"> <br>Home<br><br></a></li>
-                    <li><a href="changePassword.php" id = "changePassword"> <br>Change Password<br><br></a></li>
-                    <li><a href="viewAssignment.php" id = "viewAssignment"> <br>View Assignments<br><br></a></li>
-                    <li><a href="addAssignment.php" id = "addAssignment"> <br>Add Assignment<br><br></a></li>
-                    <li><a href="viewFeedback.php" id = "viewFeedback"> <br>View Feedback<br><br></a></li>
-                    <li><a href="logout.php" id = "logOut"> <br>Log Out<br><br></a></li>
-                    <li><a><center><?php echo "Welcome, <br>$name!";?><br><br></center></a></li>
+                    <!-- The form where users insert username and password. -->
+                    <form action="homepage.php" method="post">
+                        <center>
+                        	<p>Wrong username or password, please try again!</p>
+                            <input type="text" name ="username" placeholder="Username" style="text-align:center">
+                            <br>
+                            <input type="password" name ="password" placeholder="Password" style="text-align:center">
+                            <br>
+                            <td colspan="2" style="text-align:center;"><input type="submit" value="Log in"></td>
+                        </center>
+                    </form>
                     </a></li>
                     </ul>
                 </div>
@@ -128,47 +73,51 @@
                 </div>
             </div>
             <div class="row main-low-margin ">
+
                 <div class="col-md-8 col-sm-8">
                     <h3>"I had benefited greatly from an application that worked as my educational butler."</h3>
                     <p>
                         <br>
-                        Marie is a 22 year old economics student. She is highly active in student organizations, workout often and therefore find very 
-                        little time to spend on mandatory assignments. It is thus important that she spend her valuable time efficiently. Marie likes 
-                        to attend the lectures, but often find herself loosing focus since the professors have a higher pace than she prefers. Since 
-                        the referents rarely meet, she feels the lecturers doesn’t adapt. Maries goal with BotLer is to boost her learning experience.
-                    </p>     
+                        Marie is a 22 year old economics student. She is highly active in student organizations, workout often and therefore find very little time to spend on mandatory assignments. It is thus important that she spend her valuable time efficiently. Marie likes to attend the lectures, but often find herself loosing focus since the professors have a higher pace than she prefers. Since the referents rarely meet, she feels the lecturers doesn’t adapt. Maries goal with BotLer is to boost her learning experience.
+
+                    </p>
+                    
                 </div>
+
                 <div class="col-md-4 col-sm-4 text-center">
                     <img src="/marthaan/BotLer/assets/img/IMG_8407.png" width="85%" height="85%">
                     <h3>Marie Holte</h3>
+
                 </div>
             </div>
             <div class="row main-low-margin ">
-                <div class="col-md-3 col-sm-3 text-center">
-                    <img src="/marthaan/BotLer/assets/img/graf.png" width="50%" height="50%">
-                    <h3>FEATURES</h3>
-                    <p>
-                        BotLer provides students an overview over upcoming events, progression statistics and interactions with lecturers.  
-                    </p>
-                </div>
-                <div class="col-md-3 col-sm-3 text-center">
-                    <img src="/marthaan/BotLer/assets/img/features.png" width="50%" height="50%">
-                    <h3>TECHNOLOGIES</h3>
-                    <p>
-                        BotLer features SDKs for iOS, Machine Learning, Big Data and High Performance. 
+                    <div class="col-md-3 col-sm-3 text-center">
+                        <img src="/marthaan/BotLer/assets/img/graf.png" width="50%" height="50%">
+                        <h3>FEATURES</h3>
+                        <p>
+                            BotLer provides students an overview over upcoming events, progression statistics and interactions with lecturers.  
+                        </p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 text-center">
+                        <img src="/marthaan/BotLer/assets/img/features.png" width="50%" height="50%">
+                        <h3>TECHNOLOGIES</h3>
+                        <p>
+                            BotLer features SDKs for iOS, Machine Learning, Big Data and High Performance. 
 
-                    </p>
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <h3>OUR VALUE PROPOSITION</h3>
+                        <p>
+                            BotLer helps students organize and structure their studies,  handing them information about the class, to secure no late deliveries. With direct feedback to the lecturer, the application redefines the student-teacher relationship and makes lecture adaption easier than ever before. 
+
+                        </p>
+
+                    </div>
+
                 </div>
-                <div class="col-md-6 col-sm-6">
-                    <h3>OUR VALUE PROPOSITION</h3>
-                    <p>
-                        BotLer helps students organize and structure their studies,  handing them information about the class, to secure no late 
-                        deliveries. With direct feedback to the lecturer, the application redefines the student-teacher relationship and makes lecture 
-                        adaption easier than ever before. 
-                    </p>
-                </div>
-            </div>
         </div>
+        <div class="space-bottom"></div>
         <div id="footer">
             <div class="row">
                 <div class="col-md-4">
@@ -180,8 +129,10 @@
                         Coaches: Henry Sjøen, Kari Eline Strandjord,<br> 
                         Audun Liberg, Evelyn Saxegaard, <br>
                         Hung Quang Thieu, Jie Li, Håvard Estensen <br>
+
                         <br>
                         COPYRIGHT © 2017
+
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -221,6 +172,8 @@
                         Sondre Brekke | Software developer <br>
                         Jørgen F. Bø | Software designer <br>
                         Martha H. Andersen | Product developer 
+                        
+
                     </p>
                 </div>
             </div>

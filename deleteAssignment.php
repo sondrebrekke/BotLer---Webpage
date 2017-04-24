@@ -5,13 +5,10 @@
     if (!$_SESSION["username"]) {
         header("Location: index.html");
     }
+    include 'security.php';
 
     //Connects to the database
-	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12', 'jorgfb_botler_database'); 
-	if (!mysqli_set_charset($conn, "utf8")) { 
-		printf("Feil ved lasting av tegnsettet utf8: %s\n", mysqli_error($conn));
-		printf('<BR>');
-	}
+	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB, 'jorgfb_botler_database'); 
 
 	//Gets the id and subject code to delete. 
 	$id = trim($_POST['id']);

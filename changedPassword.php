@@ -1,15 +1,14 @@
 <?php
+    include 'security.php';
+
     //Checks the charset
-    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12', 'jorgfb_botler_database'); 
-    	if (!mysqli_set_charset($conn, "utf8")) { 
-    		printf("Feil ved lasting av tegnsettet utf8: %s\n", mysqli_error($conn));
-    		printf('<BR>');
-    		} else { 
-    		
-    	}
-        //Sets the charset to utf8
+    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB, 'jorgfb_botler_database'); 
+
+    //Sets the charset to utf8
     $conn->set_charset('utf8');
-    $records = array(); //Creates an array where the info will be stored
+
+    //Creates an array where the info will be stored
+    $records = array(); 
     if(!empty($_POST)) {
     	session_start();
         $username = $_SESSION['username'];	
@@ -18,6 +17,7 @@
         $password = $conn->real_escape_string($password);
         $password1 = $conn->real_escape_string($password1);
     }
+
     //Checks that the passwords that the user's typed in matches.
     if ($password <> $password1)
     {
@@ -33,7 +33,9 @@
     }
 
     $conn->close();
+    
 	session_start();
+    $_SESSION['password'] = $password;
     //If no active session, send the user back to index.html
 	$name = $_SESSION['name'];
     if (!$_SESSION["username"]) {
@@ -43,6 +45,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Styling -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="description" content="">
@@ -68,6 +71,7 @@
                     <a class="navbar-brand"></a>
                 </div>
                 <div class="navbar-collapse collapse">
+                <!-- Displays the menubar -->
                 <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                     <ul class="nav navbar-nav navbar-right">
                     <li><a href="homepage.php" id = "home"> <br>Home<br><br></a></li>
@@ -99,7 +103,7 @@
             <center>
                 <h3>Change password</h3>
                 <hr>
-                <form action="endrePassord.php" method="post">
+                <form action="changedPassword.php" method="post">
                             <div class="form-group">
                                 <input type="text" class="form-control" required="required" name = "username" placeholder="username" readonly="readonly" value=<?php echo $username; ?> text-align="center" style="width: 300px;">
                             </div>

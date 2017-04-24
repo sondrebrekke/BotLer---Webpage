@@ -1,5 +1,8 @@
 <?php
-	session_start(); //Start the current session
-	session_destroy(); //Destroy the session
-	header("location:index.html"); //Move back to index.html
+	//Start the current session
+	session_start(); 
+	//Destroy the session
+	session_destroy(); 
+	//Move back to index.html
+	header("location:index.html"); 
 ?>

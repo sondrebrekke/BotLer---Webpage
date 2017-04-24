@@ -19,6 +19,7 @@
             if (!$_SESSION["username"]) {
                 header("Location: index.html");
             }
+            //Gets the name of the lecturer if a session is active
             $name = $_SESSION['name'];  
         ?>
         <div class="navbar navbar-default navbar-fixed-top">
@@ -33,6 +34,7 @@
                     </button>
                     <a class="navbar-brand"></a>
                 </div>
+                <!-- Defines the menubar where user can click to enter a site -->
                 <div class="navbar-collapse collapse">
                 <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                     <ul class="nav navbar-nav navbar-right">
@@ -45,9 +47,9 @@
                     <li><a><center><?php echo "Welcome, <br>$name!";?><br><br></center></a></li>
                     </ul>
                 </div>
-
             </div>
         </div>
+        <!-- Adds a couple of breaks to make sure the following are visible under the menu -->
         <br>
         <br>
         <br>
@@ -67,7 +69,8 @@
                 <div class="col-md-7 col-sm-7">
                     <h3>Add Assignment</h3>
                     <hr>
-                    <form action="addedAssignments.php" method="post" id="assignmentForm">
+                    <!-- Creates a form that will send the entered information to the DB if entered correctly -->
+                    <form action="addedAssignments.php" method="post">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
