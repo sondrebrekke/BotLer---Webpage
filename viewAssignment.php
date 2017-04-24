@@ -3,21 +3,21 @@
     $subject_code = $_SESSION['subject_code'];
     $username= $_SESSION['username'];
     $password = $_SESSION['password'];
-    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
-        if ($conn->connect_error){
-            die("feil: " . $conn->connect_error);
-        } else {
+    include 'security.php';
 
-        }
+    //Connects to the DB
+    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB);
+    $db = mysqli_select_db($conn, 'jorgfb_botler_database');
     //Sets the charset to utf8
     $conn->set_charset('utf8');
-    $db = mysqli_select_db($conn, 'jorgfb_botler_database');
+    //Gets the information needed from the DB 
     $query = "SELECT assignments.id, assignments.name, subject, description, deadline, subject_code, lecturer.id, lecturer, username, password FROM assignments, lecturer, subjects WHERE assignments.subject = subjects.subject_code AND subjects.lecturer = lecturer.id AND BINARY username= BINARY '$username' AND BINARY password= BINARY '$password'" ;
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Styling -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="description" content="">
@@ -31,6 +31,7 @@
     <body>
         <?php
             session_start();
+            //Checks if the user has an active session, otherwise it redirects to index.html
             if (!$_SESSION["username"]) {
                 header("Location: index.html");
             }
@@ -49,6 +50,7 @@
                     <a class="navbar-brand"></a>
                 </div>
                 <div class="navbar-collapse collapse">
+                <!-- Displays the menu -->
                 <br><img src="/marentno/BotLer/assets/img/Logo(1).png" alt="" width="20%" height="20%"> </a>
                     <ul class="nav navbar-nav navbar-right">
                     <li><a href="homepage.php" id = "home"> <br>Home<br><br></a></li>
@@ -71,23 +73,23 @@
         <br>
         <br>
         <br>
-    <div class="container" align="center">
-            
-                  <h2>Assignments for <?php echo $subject_code ?></h2>            
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
+        <div class="container" align="center">
+            <h2>Assignments for <?php echo $subject_code ?></h2>            
+            <table class="table table-striped">
+                <thead>
+                    <tr>
                         <th>Name</th>
                         <th>Subject</th>
                         <th>Description</th>
                         <th>Deadline</th>
                         <th>Edit</th>
                         <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <?php
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <?php
+                        //Displays the information from the DB in a nice table. 
                         $db=array();
                 
                         if ($res = mysqli_query($conn, $query)){
@@ -111,11 +113,11 @@
                         session_start();
                         $_SESSION['b'] = $b;
                         $_SESSION['subject'] = $subject;
-                        ?>
-                        </tr>
-                    </tbody>
-                  </table>
-                </div>
+                    ?>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <br>
         <div id="footer">
             <div class="row">
@@ -171,8 +173,6 @@
                         Sondre Brekke | Software developer <br>
                         Jørgen F. Bø | Software designer <br>
                         Martha H. Andersen | Product developer 
-                        
-
                     </p>
                 </div>
             </div>

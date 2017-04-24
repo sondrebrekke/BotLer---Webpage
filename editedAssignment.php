@@ -5,8 +5,10 @@
         header("Location: index.html");
     }
 
+    include 'security.php';
+
     //Connects to the database, and checks the charset
-	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12', 'jorgfb_botler_database'); 
+	$conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB, 'jorgfb_botler_database'); 
 	if (!mysqli_set_charset($conn, "utf8")) { 
 		printf("Could not load utf8: %s\n", mysqli_error($conn));
 		printf('<BR>');
@@ -24,6 +26,7 @@
 		$sql = "UPDATE assignments SET name = BINARY '$name1', description = BINARY '$description1', deadline = BINARY '$deadline' WHERE id='$id'";
         $melding = "Your assignment was added successfully!";
         if ($conn->query($sql) === TRUE) {
+            //Redirects the user to viewAssignment if everything is successful.
         	header("Location: viewAssignment.php");
         }
     }
@@ -32,7 +35,6 @@
         $melding = "Wrong date-format. Please try again!";
         echo("FEIL");
     }
-	//The SQL-query that updates the assignment
 ?>
 
 <!DOCTYPE html>
@@ -201,13 +203,7 @@
                 </div>
             </div>
         </div>
-
-        <!--END FOOTER SECTION -->
-        <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-        <!-- CORE JQUERY LIBRARY -->
         <script src="assets/js/jquery.js"></script>
-        <!-- CORE BOOTSTRAP LIBRARY -->
         <script src="assets/js/bootstrap.min.js"></script>
-
     </body>
 </html>

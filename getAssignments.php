@@ -2,12 +2,13 @@
     include 'security.php';
 
 	// Create connection
-	$con=mysqli_connect("mysql.stud.ntnu.no","jorgfb_botler",$passwordDB,"jorgfb_botler_database");
+	$con = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB, 'jorgfb_botler_database');
+
 	//Sets the charset
 	$con->set_charset('utf8');
-	 
-	// This SQL statement selects subjectinfo from the table 'subjects' ordered by subject code
-	$sql = "SELECT subject_code, subject_name FROM subjects ORDER BY subject_code ASC";
+	
+	// This SQL statement selects all assignments from the table 'assignments' and orders them by deadline
+	$sql = "SELECT * FROM assignments ORDER BY deadline ASC";
 	 
 	// Check if there are results
 	if ($result = mysqli_query($con, $sql))
@@ -25,7 +26,7 @@
 		}
 	 
 		// Finally, encode the array to JSON and output the results
-		echo json_encode(array('subjects'=>$resultArray));
+		echo json_encode(array('data'=>$resultArray));
 	}
 	 
 	// Close connections

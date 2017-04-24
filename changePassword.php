@@ -4,6 +4,7 @@
 	$username= $_SESSION['username'];
 	$password = $_SESSION['password'];
 	$name = $_SESSION['name'];
+    //Redirects the user if a session is not active.
     if (!$_SESSION["username"]) {
         header("Location: index.html");
     }
@@ -62,8 +63,10 @@
                 <br>
                 <h3>Change password</h3>
                 <hr>
-                <form action="endrePassord.php" method="post" id="changePasswordForm">
+                <!-- Creates a form where the user can use to change password -->
+                <form action="changedPassword.php" method="post">
                     <div class="form-group">
+                        <!-- The username is non-changeable to make sure not two identical exists. -->
                         <input type="text" class="form-control" required="required" name = "username" placeholder="username" readonly="readonly" value=<?php echo $username; ?> text-align="center" style="width: 300px;">
                     </div>
                     <div class="form-group">

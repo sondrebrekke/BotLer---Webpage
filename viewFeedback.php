@@ -1,5 +1,5 @@
 ﻿<?php
-
+    
     //Gets the necessary variables from the PHP-session
     session_start();
     $subject_code = $_SESSION['subject_code'];
@@ -7,11 +7,10 @@
     $password = $_SESSION['password'];
     $name = $_SESSION['name'];
 
+    include 'security.php';
+
     //Connects to the DB
-    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
-    if ($conn->connect_error){
-        die("feil: " . $conn->connect_error);
-    }
+    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB);
     $db = mysqli_select_db($conn, 'jorgfb_botler_database');
     
     //Creates the query that will get the feedback for the spesific lecturer from the last 7 days. 

@@ -6,14 +6,10 @@
     $nameL = $_SESSION['name'];
 	$subject_code = $_SESSION['subject_code'];
 
+    include 'security.php';
+
     //Opens a connections, and checks the charset
-    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12', 'jorgfb_botler_database'); 
-	if (!mysqli_set_charset($conn, "utf8")) { 
-		printf("Feil ved lasting av tegnsettet utf8: %s\n", mysqli_error($conn));
-		printf('<BR>');
-		} else { 
-		
-	}
+    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB, 'jorgfb_botler_database'); 
     //Sets the charset to utf8
     $conn->set_charset('utf8');
 	
@@ -32,6 +28,7 @@
         $sql = "INSERT INTO assignments (name, subject, description, deadline) VALUES (BINARY '$name1', '$subject_code', BINARY '$description1', '$deadline')";
         $melding = "Your assignment was added successfully!";
         if ($conn->query($sql) === TRUE) {
+            //Redirects the user to viewAssignment if the assignment was added successfully.
             header("Location: viewAssignment.php");
         }
     }
@@ -99,6 +96,7 @@
                     <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                         <center>        
                             <h3> 
+                                <!-- Echos the message if the user has not entered correctly -->
                                 <?php echo $melding ?>
                             </h3>
                         </center>    

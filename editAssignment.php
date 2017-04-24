@@ -6,11 +6,10 @@
     $username= $_SESSION['username'];
     $password = $_SESSION['password'];
     
+    include 'security.php';
+
     //Connects to the database
-    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', 'park12');
-    if ($conn->connect_error){
-        die("Something went wrong: " . $conn->connect_error);
-    }
+    $conn = new mysqli('mysql.stud.ntnu.no', 'jorgfb_botler', $passwordDB);
     $db = mysqli_select_db($conn, 'jorgfb_botler_database');
 
     //Sets the charset to utf8
@@ -24,6 +23,7 @@
     }
 
     $_SESSION['id'] = $id;
+    //Gets the information about the selected assignment
     $query = "SELECT name, description, deadline FROM assignments WHERE id= '$id'" ;
     if ($res = mysqli_query($conn, $query)){
         while ($row = $res -> fetch_array()) {
@@ -36,6 +36,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- For styling -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="description" content="">
