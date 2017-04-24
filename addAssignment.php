@@ -67,7 +67,7 @@
                 <div class="col-md-7 col-sm-7">
                     <h3>Add Assignment</h3>
                     <hr>
-                    <form action="addedAssignments.php" method="post">
+                    <form action="addedAssignments.php" method="post" id="assignmentForm">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
